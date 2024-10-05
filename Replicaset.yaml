@@ -1,0 +1,56 @@
+apiVersion: apps/v1 #
+kind: ReplicaSet
+metadata:
+  name: myapp-replicaset
+  labels:
+    app: myapp
+    type: front-end
+spec:
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: front-end
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx
+  replicas: 3
+  selector:
+    matchLabels:
+      type: front-end
+
+
+
+
+
+
+
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-1
+  labels:
+    app: deployment-1
+    type: busybox-pod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: busybox-pod
+  template:
+    metadata:
+      labels:
+        type: busybox-pod
+    spec:
+      containers:
+        - name: busybox-container
+          image: busybox888
+          command:
+            - sh
+            - "-c"
+            - echo Hello Kubernetes! && sleep 3600
+---

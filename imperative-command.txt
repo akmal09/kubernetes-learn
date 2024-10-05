@@ -1,0 +1,40 @@
+kubectl run nginx-pod --image=nginx:alpine
+
+
+kubectl run redis --image=redis:alpine --dry-run=client -o yaml
+
+kubectl create service redis-service --port=6379
+
+
+kubectl expose pod redis --port=6379 --name=redis-service
+
+
+kubectl create deployment webapp --image=kodekloud/webapp-color --replicas=3
+
+
+kubectl run custom-nginx --image=nginx --port=8080
+
+
+kubectl create namespace dev-ns
+
+kubectl create deployment redis-deploy --image=redis --namespace=dev-ns --replicas=2
+
+
+kubectl run http --image=httpd:alpine
+
+
+
+
+kubectl run httpd --image=httpd:alpine
+
+
+
+
+kubectl get svc
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+kubernetes      ClusterIP   10.43.0.1      <none>        443/TCP    22m
+redis-service   ClusterIP   10.43.141.27   <none>        6379/TCP   7m46s
+httpd           ClusterIP   10.43.52.180   <none>        80/TCP     38s
+
+^C
+
