@@ -1,0 +1,255 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: space-alien-welcome-message-generator
+  name: space-alien-welcome-message-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: space-alien-welcome-message-generator
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: space-alien-welcome-message-generator
+    spec:
+      containers:
+        - image: httpd:alpine
+          name: httpd
+          resources: {}
+status: {}
+
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: tes
+  labels:
+    run: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: run
+  template:
+    metadata:
+      labels:
+        run: app
+    spec:
+      containers:
+        - name:
+          image:
+          resources:
+            requests:
+              memory: "20Mi"
+              cpu: "1"
+            limits:
+              memory: ""
+              cpu: ""
+          env:
+            - name: asda
+              valueFrom:
+                configMapRefKey:
+                  name: config-map-ref
+                  key: asda
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: pod1
+  name: pod1
+spec:
+  containers:
+    - image: nginx:alpine
+      name: pod1
+      resources: {}
+      env:
+        - name: TREE1
+          valueFrom:
+            configMapKeyRef:
+              name: trauerweide
+              key: tree
+      volumeMounts:
+        - name: birke
+          mountPath: /etc/birke
+  volumes:
+    - name: birke
+      configMap:
+        name: birke
+
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+
+helm install mywebapp bitnami/apache
+helm pull bitnami/apache
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: delayed-volume-sc
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:alpine
+      volumeMounts:
+        - mountPath: /var/www/html
+          name: local-pv
+  volumes:
+    - name: local-pv
+      persistentVolumeClaim:
+        claimName: local-pvc
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: ingress-nginx
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+    app.kubernetes.io/version: 1.1.2
+    helm.sh/chart: ingress-nginx-4.0.18
+  name: ingress-nginx-controller
+  namespace: ingress-nginx
+spec:
+  replicas: 1
+  minReadySeconds: 0
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: ingress-nginx
+      app.kubernetes.io/name: ingress-nginx
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: controller
+        app.kubernetes.io/instance: ingress-nginx
+        app.kubernetes.io/name: ingress-nginx
+    spec:
+      containers:
+        - args:
+            - /nginx-ingress-controller
+            - --publish-service=$(POD_NAMESPACE)/ingress-nginx-controller
+            - --election-id=ingress-controller-leader
+            - --watch-ingress-without-class=true
+            - --default-backend-service=app-space/default-http-backend
+            - --controller-class=k8s.io/ingress-nginx
+            - --ingress-class=nginx
+            - --configmap=$(POD_NAMESPACE)/ingress-nginx-controller
+            - --validating-webhook=:8443
+            - --validating-webhook-certificate=/usr/local/certificates/cert
+            - --validating-webhook-key=/usr/local/certificates/key
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: LD_PRELOAD
+            value: /usr/local/lib/libmimalloc.so
+          image: registry.k8s.io/ingress-nginx/controller:v1.1.2@sha256:28b11c>
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /wait-shutdown
+                livenessProbe:
+                  failureThreshold: 5
+                  httpGet:
+                    path: /healthz
+                    port: 10254
+                    scheme: HTTP
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  successThreshold: 1
+                  timeoutSeconds: 1
+                name: controller
+                ports:
+                  - name: http
+                      containerPort: 80
+                    protocol: TCP
+                  - containerPort: 443
+                    name: https
+                    protocol: TCP
+                  - containerPort: 8443
+                    name: webhook
+                    protocol: TCP
+                  readinessProbe:
+                    failureThreshold: 3
+                    httpGet:
+                      path: /healthz
+                      port: 10254
+                      scheme: HTTP
+                    initialDelaySeconds: 10
+                    periodSeconds: 10
+                    successThreshold: 1
+                    timeoutSeconds: 1
+                    resources:
+                      requests:
+                        cpu: 100m
+                        memory: 90Mi
+                    securityContext:
+                      allowPrivilegeEscalation: true
+                      capabilities:
+                        add:
+                          - NET_BIND_SERVICE
+                          drop:
+                          - ALL
+                          runAsUser: 101
+                          volumeMounts:
+                            - mountPath: /usr/local/certificates/
+                              name: webhook-cert
+                              readOnly: true
+                        dnsPolicy: ClusterFirst
+                        nodeSelector:
+                          kubernetes.io/os: linux
+                        serviceAccountName: ingress-nginx
+                        terminationGracePeriodSeconds: 300
+                        volumes:
+                          - name: webhook-cert
+                            secret:
+                              secretName: ingress-nginx-admission
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: ingress-nginx
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+    app.kubernetes.io/version: 1.1.2
+    helm.sh/chart: ingress-nginx-4.0.18
+  name: ingress-controller
+  namespace: ingress-nginx
+  spec:
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      nodeport: 30080
+    selector:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: ingress-nginx
+      app.kubernetes.io/name: ingress-nginx
+    type: NodePort

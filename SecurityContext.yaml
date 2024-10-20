@@ -1,0 +1,38 @@
+---
+#If the container not have user id, the user id use pod user id but if container have then it is using container user id
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-sleeper
+  namespace: default
+spec:
+  securityContext:
+    runAsUser: 1012 #parent user
+  containers:
+    - command:
+        - sleep
+        - "4800"
+      image: ubuntu
+      imagePullPolicy: Always
+      name: ubuntu
+      securityContext:
+        runAsUser: 1010
+---
+# pod who have container with capabilities
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-sleeper
+  namespace: default
+spec:
+  containers:
+    - command:
+        - sleep
+        - "4800"
+      image: ubuntu
+      imagePullPolicy: Always
+      name: ubuntu
+      resources: {}
+      securityContext:
+        capabilities:
+          add: ["SYS_TIME"]

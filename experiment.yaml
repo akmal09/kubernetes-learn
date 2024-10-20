@@ -1,0 +1,1049 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: space-alien-welcome-message-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: space-alien-welcome-message-generator
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: space-alien-welcome-message-generator
+    spec:
+      containers:
+        - image: httpd:alpine
+          name: httpd
+          resources: {}
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            exec:
+              command:
+                - stat
+                - /tmp/ready
+
+
+  NAME                                SHORTNAMES   APIVERSION                        NAMESPACED   KIND
+    bindings                                         v1                                true         Binding
+    componentstatuses                   cs           v1                                false        ComponentStatus
+    configmaps                          cm           v1                                true         ConfigMap
+    endpoints                           ep           v1                                true         Endpoints
+    events                              ev           v1                                true         Event
+    limitranges                         limits       v1                                true         LimitRange
+    namespaces                          ns           v1                                false        Namespace
+    nodes                               no           v1                                false        Node
+    persistentvolumeclaims              pvc          v1                                true         PersistentVolumeClaim
+    persistentvolumes                   pv           v1                                false        PersistentVolume
+    pods                                po           v1                                true         Pod
+    podtemplates                                     v1                                true         PodTemplate
+    replicationcontrollers              rc           v1                                true         ReplicationController
+    resourcequotas                      quota        v1                                true         ResourceQuota
+    secrets                                          v1                                true         Secret
+    serviceaccounts                     sa           v1                                true         ServiceAccount
+    services                            svc          v1                                true         Service
+    mutatingwebhookconfigurations                    admissionregistration.k8s.io/v1   false        MutatingWebhookConfiguration
+    validatingadmissionpolicies                      admissionregistration.k8s.io/v1   false        ValidatingAdmissionPolicy
+    validatingadmissionpolicybindings                admissionregistration.k8s.io/v1   false        ValidatingAdmissionPolicyBinding
+    validatingwebhookconfigurations                  admissionregistration.k8s.io/v1   false        ValidatingWebhookConfiguration
+    customresourcedefinitions           crd,crds     apiextensions.k8s.io/v1           false        CustomResourceDefinition
+    apiservices                                      apiregistration.k8s.io/v1         false        APIService
+    controllerrevisions                              apps/v1                           true         ControllerRevision
+    daemonsets                          ds           apps/v1                           true         DaemonSet
+    deployments                         deploy       apps/v1                           true         Deployment
+    replicasets                         rs           apps/v1                           true         ReplicaSet
+    statefulsets                        sts          apps/v1                           true         StatefulSet
+    selfsubjectreviews                               authentication.k8s.io/v1          false        SelfSubjectReview
+    tokenreviews                                     authentication.k8s.io/v1          false        TokenReview
+    localsubjectaccessreviews                        authorization.k8s.io/v1           true         LocalSubjectAccessReview
+    selfsubjectaccessreviews                         authorization.k8s.io/v1           false        SelfSubjectAccessReview
+    selfsubjectrulesreviews                          authorization.k8s.io/v1           false        SelfSubjectRulesReview
+    subjectaccessreviews                             authorization.k8s.io/v1           false        SubjectAccessReview
+    horizontalpodautoscalers            hpa          autoscaling/v2                    true         HorizontalPodAutoscaler
+    cronjobs                            cj           batch/v1                          true         CronJob
+    jobs                                             batch/v1                          true         Job
+    certificatesigningrequests          csr          certificates.k8s.io/v1            false        CertificateSigningRequest
+    leases                                           coordination.k8s.io/v1            true         Lease
+    endpointslices                                   discovery.k8s.io/v1               true         EndpointSlice
+    events                              ev           events.k8s.io/v1                  true         Event
+    flowschemas                                      flowcontrol.apiserver.k8s.io/v1   false        FlowSchema
+    prioritylevelconfigurations                      flowcontrol.apiserver.k8s.io/v1   false        PriorityLevelConfiguration
+    helmchartconfigs                                 helm.cattle.io/v1                 true         HelmChartConfig
+    helmcharts                                       helm.cattle.io/v1                 true         HelmChart
+    addons                                           k3s.cattle.io/v1                  true         Addon
+    etcdsnapshotfiles                                k3s.cattle.io/v1                  false        ETCDSnapshotFile
+    nodes                                            metrics.k8s.io/v1beta1            false        NodeMetrics
+    pods                                             metrics.k8s.io/v1beta1            true         PodMetrics
+    ingressclasses                                   networking.k8s.io/v1              false        IngressClass
+    ingresses                           ing          networking.k8s.io/v1              true         Ingress
+    networkpolicies                     netpol       networking.k8s.io/v1              true         NetworkPolicy
+    runtimeclasses                                   node.k8s.io/v1                    false        RuntimeClass
+    poddisruptionbudgets                pdb          policy/v1                         true         PodDisruptionBudget
+    clusterrolebindings                              rbac.authorization.k8s.io/v1      false        ClusterRoleBinding
+    clusterroles                                     rbac.authorization.k8s.io/v1      false        ClusterRole
+    rolebindings                                     rbac.authorization.k8s.io/v1      true         RoleBinding
+    roles                                            rbac.authorization.k8s.io/v1      true         Role
+    priorityclasses                     pc           scheduling.k8s.io/v1              false        PriorityClass
+    csidrivers                                       storage.k8s.io/v1                 false        CSIDriver
+    csinodes                                         storage.k8s.io/v1                 false        CSINode
+    csistoragecapacities                             storage.k8s.io/v1                 true         CSIStorageCapacity
+    storageclasses                      sc           storage.k8s.io/v1                 false        StorageClass
+    volumeattachments                                storage.k8s.io/v1                 false        VolumeAttachment
+    ingressroutes                                    traefik.containo.us/v1alpha1      true         IngressRoute
+    ingressroutetcps                                 traefik.containo.us/v1alpha1      true         IngressRouteTCP
+    ingressrouteudps                                 traefik.containo.us/v1alpha1      true         IngressRouteUDP
+    middlewares                                      traefik.containo.us/v1alpha1      true         Middleware
+    middlewaretcps                                   traefik.containo.us/v1alpha1      true         MiddlewareTCP
+    serverstransports                                traefik.containo.us/v1alpha1      true         ServersTransport
+    tlsoptions                                       traefik.containo.us/v1alpha1      true         TLSOption
+    tlsstores                                        traefik.containo.us/v1alpha1      true         TLSStore
+    traefikservices                                  traefik.containo.us/v1alpha1      true         TraefikService
+    ingressroutes                                    traefik.io/v1alpha1               true         IngressRoute
+    ingressroutetcps                                 traefik.io/v1alpha1               true         IngressRouteTCP
+    ingressrouteudps                                 traefik.io/v1alpha1               true         IngressRouteUDP
+    middlewares                                      traefik.io/v1alpha1               true         Middleware
+    middlewaretcps                                   traefik.io/v1alpha1               true         MiddlewareTCP
+    serverstransports                                traefik.io/v1alpha1               true         ServersTransport
+    serverstransporttcps                             traefik.io/v1alpha1               true         ServersTransportTCP
+    tlsoptions                                       traefik.io/v1alpha1               true         TLSOption
+    tlsstores                                        traefik.io/v1alpha1               true         TLSStore
+    traefikservices                                  traefik.io/v1alpha1               true         TraefikService
+  michelle
+  michelle-storage-admin
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: storage-admin
+rules:
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "watch", "list", "create", "delete"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "watch", "list", "create", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: michelle-storage-admin
+subjects:
+  - kind: User
+    name: michelle
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: storage-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: michellecr
+rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["*"]
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: michellecrb
+subjects:
+  - kind: User
+    name: michelle
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: michellecr
+  apiGroup: rbac.authorization.k8s.io
+
+
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list","create","delete"]
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: dev-user-binding
+subjects:
+  - kind: User
+    name: dev-user
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp
+  namespace: default
+spec:
+  containers:
+    - env:
+        - name: LOG_HANDLERS
+          value: file
+      image: kodekloud/event-simulator
+      imagePullPolicy: Always
+      name: event-simulator
+      volumeMounts:
+        - mountPath: /log
+          name: webapp-log
+  volumes:
+    - name: webapp-log
+      persistentVolumeClaim:
+        claimName: claim-log-1
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim-log-1
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Mi
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-log
+spec:
+  persistentVolumeReclaimPolicy: Retain
+  accessModes: ReadWriteMany
+  capacity:
+    storage: 100Mi
+  hostPath:
+    path: /pv/log
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp
+  namespace: default
+spec:
+  containers:
+    - env:
+        - name: LOG_HANDLERS
+          value: file
+      image: kodekloud/event-simulator
+      imagePullPolicy: Always
+      name: event-simulator
+      volumeMounts:
+        - mountPath: /log
+          name: webapp-log
+  volumes:
+    - name: webapp-log
+      hostPath:
+        path: /var/log/webapp
+        type: Directory
+
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: internal-policy
+  namespace: default
+spec:
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              name: payroll
+      ports:
+        - protocol: TCP
+          port: 8080
+    - to:
+        - podSelector:
+            matchLabels:
+              name: mysql
+      ports:
+        - protocol: TCP
+          port: 3306
+  policyTypes:
+    - Egress
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "-"
+  name: ingress-controller
+  namespace: app-space
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: wear-service
+                port:
+                  number: 8080
+            path: /wear
+            pathType: Prefix
+          - backend:
+              service:
+                name: video-service
+                port:
+                  number: 8080
+            path: /watch
+            pathType: Prefix
+
+
+
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2024-10-10T04:12:55Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: ingress-nginx
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+    app.kubernetes.io/version: 1.1.2
+    helm.sh/chart: ingress-nginx-4.0.18
+  name: ingress-nginx-controller
+  namespace: ingress-nginx
+  resourceVersion: "1158"
+  uid: 563e5032-2c91-4531-bb1f-d9f0a9299e5d
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: ingress-nginx
+      app.kubernetes.io/name: ingress-nginx
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: controller
+        app.kubernetes.io/instance: ingress-nginx
+        app.kubernetes.io/name: ingress-nginx
+    spec:
+      containers:
+        - args:
+            - /nginx-ingress-controller
+            - --publish-service=$(POD_NAMESPACE)/ingress-nginx-controller
+            - --election-id=ingress-controller-leader
+            - --watch-ingress-without-class=true
+            - --default-backend-service=app-space/default-backend-service
+            - --controller-class=k8s.io/ingress-nginx
+            - --ingress-class=nginx
+            - --configmap=$(POD_NAMESPACE)/ingress-nginx-controller
+            - --validating-webhook=:8443
+            - --validating-webhook-certificate=/usr/local/certificates/cert
+            - --validating-webhook-key=/usr/local/certificates/key
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: LD_PRELOAD
+              value: /usr/local/lib/libmimalloc.so
+          image: registry.k8s.io/ingress-nginx/controller:v1.1.2@sha256:28b11ce69e57843de44e3db6413e98d09de0f6688e33d4bd384002a44f78405c
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /wait-shutdown
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: controller
+          ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+            - containerPort: 443
+              name: https
+              protocol: TCP
+            - containerPort: 8443
+              name: webhook
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 100m
+              memory: 90Mi
+          securityContext:
+            allowPrivilegeEscalation: true
+            capabilities:
+              add:
+                - NET_BIND_SERVICE
+              drop:
+                - ALL
+            runAsUser: 101
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /usr/local/certificates/
+              name: webhook-cert
+              readOnly: true
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        kubernetes.io/os: linux
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: ingress-nginx
+      serviceAccountName: ingress-nginx
+      terminationGracePeriodSeconds: 300
+      volumes:
+        - name: webhook-cert
+          secret:
+            defaultMode: 420
+            secretName: ingress-nginx-admission
+status:
+  availableReplicas: 1
+  conditions:
+    - lastTransitionTime: "2024-10-10T04:13:31Z"
+      lastUpdateTime: "2024-10-10T04:13:31Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2024-10-10T04:12:55Z"
+      lastUpdateTime: "2024-10-10T04:13:31Z"
+      message: ReplicaSet "ingress-nginx-controller-597d7b4fbd" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+spec:
+  type: NodePort
+  selector:
+    name: simple-webapp
+  ports:
+    targetPort: 8080
+    port: 8080
+    nodePort: 30080
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30080
+  type: NodePort
+  selector:
+    name: simple-webapp
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: throw-dice-cron-job
+spec:
+  schedule: "30 21 * * *"
+  jobTemplate:
+    spec:
+      completions: 3
+      backoffLimit: 25 # This is so the job does not quit before it succeeds.
+      template:
+        spec:
+          containers:
+            - name: throw-dice
+              image: kodekloud/throw-dice
+          restartPolicy: Never
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: throw-dice-job
+spec:
+  completions: 3
+  parallelism: 3
+  backoffLimit: 25 # This is so the job does not quit before it succeeds.
+  template:
+    spec:
+      containers:
+        - name: throw-dice
+          image: kodekloud/throw-dice
+      restartPolicy: Never
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: simple-webapp
+  name: simple-webapp-1
+  namespace: default
+spec:
+  containers:
+    - image: kodekloud/webapp-delayed-start
+      imagePullPolicy: Always
+      name: simple-webapp
+      ports:
+        - containerPort: 8080
+          protocol: TCP
+      livenessProbe:
+        httpGet:
+          port: 8080
+          path: /live
+        periodSeconds: 1
+        initialDelaySeconds: 80
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: simple-webapp
+  name: simple-webapp-2
+  namespace: default
+spec:
+  containers:
+    - env:
+        - name: APP_START_DELAY
+          value: "80"
+      image: kodekloud/webapp-delayed-start
+      imagePullPolicy: Always
+      name: simple-webapp
+      ports:
+        - containerPort: 8080
+          protocol: TCP
+      readinessProbe:
+        httpGet:
+          path: /ready
+          port: 8080
+      livenessProbe:
+        httpGet:
+          path: /live
+          port: 8080
+        initialDelaySeconds: 80
+        periodSeconds: 1
+      volumeMounts:
+        - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          name: kube-api-access-mq6ns
+          readOnly: true
+  tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+  volumes:
+    - name: kube-api-access-mq6ns
+      projected:
+        defaultMode: 420
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              items:
+                - key: ca.crt
+                  path: ca.crt
+              name: kube-root-ca.crt
+          - downwardAPI:
+              items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: yellow
+spec:
+  containers:
+    - name: lemon
+      image: busybox
+      command: ["sleep"]
+      args: ["1000"]
+    - name: gold
+      image: redis
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: red
+  name: red
+  namespace: default
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: red
+  template:
+    metadata:
+      labels:
+        app: red
+    spec:
+      containers:
+        - image: nginx
+          imagePullPolicy: Always
+          name: nginx
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: Exists
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: blue
+  name: blue
+  namespace: default
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: blue
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: blue
+    spec:
+      containers:
+        - image: nginx
+          imagePullPolicy: Always
+          name: nginx
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: color
+                    operator: In
+                    values:
+                      - blue
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-dashboard
+  namespace: default
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: web-dashboard
+  template:
+    metadata:
+      labels:
+        name: web-dashboard
+    spec:
+      serviceAccount: dashboard-sa
+      containers:
+        - env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+          image: gcr.io/kodekloud/customimage/my-kubernetes-dashboard
+          imagePullPolicy: Always
+          name: web-dashboard
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+
+
+controlplane ~ ➜  cat /var/rbac/dashboard-sa-role-binding.yaml
+---
+kind: RoleBinding
+apiVersion: v1
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+  - kind: ServiceAccount
+    name: dashboard-sa # Name is case sensitive
+    namespace: default
+roleRef:
+  kind: Role #this must be Role or ClusterRole
+  name: pod-reader # this must match the name of the Role or ClusterRole you wish to bind to
+  apiGroup: rbac.authorization.k8s.io
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2024-10-05T08:37:33Z"
+  generateName: web-dashboard-6cbbc88b59-
+  labels:
+    name: web-dashboard
+    pod-template-hash: 6cbbc88b59
+  name: web-dashboard-6cbbc88b59-lmswb
+  namespace: default
+  ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: web-dashboard-6cbbc88b59
+      uid: 71b66d86-c04e-4c20-8e35-6cd79e3dd18d
+  resourceVersion: "970"
+  uid: 327a4c09-4d73-4687-909b-f639605f8bc8
+spec:
+  containers:
+    - env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+      image: gcr.io/kodekloud/customimage/my-kubernetes-dashboard
+      imagePullPolicy: Always
+      name: web-dashboard
+      ports:
+        - containerPort: 8080
+          protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+        - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          name: kube-api-access-n2lnf
+          readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: controlplane
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+  volumes:
+    - name: kube-api-access-n2lnf
+      projected:
+        defaultMode: 420
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              items:
+                - key: ca.crt
+                  path: ca.crt
+              name: kube-root-ca.crt
+          - downwardAPI:
+              items:
+                - fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+                  path: namespace
+status:
+  conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-05T08:37:38Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-05T08:37:33Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-05T08:37:38Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-05T08:37:38Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-10-05T08:37:33Z"
+      status: "True"
+      type: PodScheduled
+  containerStatuses:
+    - containerID: containerd://0992156bdc710cb80559cae2ceeba34427d8f8045095d1fbf3e86f984545c3df
+      image: gcr.io/kodekloud/customimage/my-kubernetes-dashboard:latest
+      imageID: gcr.io/kodekloud/customimage/my-kubernetes-dashboard@sha256:7d70abe342b13ff1c4242dc83271ad73e4eedb04e2be0dd30ae7ac8852193069
+      lastState: {}
+      name: web-dashboard
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-10-05T08:37:38Z"
+  hostIP: 192.11.223.9
+  hostIPs:
+    - ip: 192.11.223.9
+  phase: Running
+  podIP: 10.42.0.9
+  podIPs:
+    - ip: 10.42.0.9
+  qosClass: BestEffort
+  startTime: "2024-10-05T08:37:33Z"
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bee
+  labels:
+    name: bee
+    type: bee-label
+spec:
+  containers:
+    - name: bee-container
+      image: nginx
+  tolerations:
+    - key: "spray"
+      operator: "Equal"
+      value: "mortein"
+      effect: "NoSchedule"
+
+kubectl taint nodes controlplane node-role.kubernetes.io/control-plane
+
+
+apiVersion: v1
+kind: Node
+metadata:
+  annotations:
+    flannel.alpha.coreos.com/backend-data: '{"VNI":1,"VtepMAC":"0a:e4:fa:74:d4:e6"}'
+    flannel.alpha.coreos.com/backend-type: vxlan
+    flannel.alpha.coreos.com/kube-subnet-manager: "true"
+    flannel.alpha.coreos.com/public-ip: 192.5.103.6
+    kubeadm.alpha.kubernetes.io/cri-socket: unix:///var/run/containerd/containerd.sock
+    node.alpha.kubernetes.io/ttl: "0"
+    volumes.kubernetes.io/controller-managed-attach-detach: "true"
+  creationTimestamp: "2024-10-07T02:54:47Z"
+  labels:
+    beta.kubernetes.io/arch: amd64
+    beta.kubernetes.io/os: linux
+    kubernetes.io/arch: amd64
+    kubernetes.io/hostname: controlplane
+    kubernetes.io/os: linux
+    node-role.kubernetes.io/control-plane: ""
+    node.kubernetes.io/exclude-from-external-load-balancers: ""
+  name: controlplane
+  resourceVersion: "1564"
+  uid: 0a0b498b-6522-4a4f-9866-51d5a2fa981e
+spec:
+  podCIDR: 10.244.0.0/24
+  podCIDRs:
+    - 10.244.0.0/24
+status:
+  addresses:
+    - address: 192.5.103.6
+      type: InternalIP
+    - address: controlplane
+      type: Hostname
+  allocatable:
+    cpu: "36"
+    ephemeral-storage: "936398358207"
+    hugepages-1Gi: "0"
+    hugepages-2Mi: "0"
+    memory: 214484652Ki
+    pods: "110"
+  capacity:
+    cpu: "36"
+    ephemeral-storage: 1016057248Ki
+    hugepages-1Gi: "0"
+    hugepages-2Mi: "0"
+    memory: 214587052Ki
+    pods: "110"
+  conditions:
+    - lastHeartbeatTime: "2024-10-07T02:55:12Z"
+      lastTransitionTime: "2024-10-07T02:55:12Z"
+      message: Flannel is running on this node
+      reason: FlannelIsUp
+      status: "False"
+      type: NetworkUnavailable
+    - lastHeartbeatTime: "2024-10-07T03:06:55Z"
+      lastTransitionTime: "2024-10-07T02:54:45Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2024-10-07T03:06:55Z"
+      lastTransitionTime: "2024-10-07T02:54:45Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2024-10-07T03:06:55Z"
+      lastTransitionTime: "2024-10-07T02:54:45Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2024-10-07T03:06:55Z"
+      lastTransitionTime: "2024-10-07T02:55:09Z"
+      message: kubelet is posting ready status
+      reason: KubeletReady
+      status: "True"
+      type: Ready
+  daemonEndpoints:
+    kubeletEndpoint:
+      Port: 10250
+  images:
+    - names:
+        - docker.io/kodekloud/fluent-ui-running@sha256:78fd68ba8a79adcd3e58897a933492886200be513076ba37f843008cc0168f81
+        - docker.io/kodekloud/fluent-ui-running:latest
+      sizeBytes: 389734636
+    - names:
+        - docker.io/library/nginx@sha256:d2eb56950b84efe34f966a2b92efb1a1a2ea53e7e93b94cdf45a27cf3cd47fc0
+        - docker.io/library/nginx:latest
+      sizeBytes: 72950394
+    - names:
+        - docker.io/library/nginx@sha256:04ba374043ccd2fc5c593885c0eacddebabd5ca375f9323666f28dfd5a9710e3
+      sizeBytes: 71027698
+    - names:
+        - registry.k8s.io/etcd@sha256:44a8e24dcbba3470ee1fee21d5e88d128c936e9b55d4bc51fbef8086f8ed123b
+        - registry.k8s.io/etcd:3.5.12-0
+      sizeBytes: 57236178
+    - names:
+        - registry.k8s.io/kube-apiserver@sha256:6b8e197b2d39c321189a475ac755a77896e34b56729425590fbc99f3a96468a3
+        - registry.k8s.io/kube-apiserver:v1.30.0
+      sizeBytes: 32663599
+    - names:
+        - registry.k8s.io/kube-controller-manager@sha256:5f52f00f17d5784b5ca004dffca59710fa1a9eec8d54cebdf9433a1d134150fe
+        - registry.k8s.io/kube-controller-manager:v1.30.0
+      sizeBytes: 31030110
+    - names:
+        - docker.io/weaveworks/weave-kube@sha256:d797338e7beb17222e10757b71400d8471bdbd9be13b5da38ce2ebf597fb4e63
+        - docker.io/weaveworks/weave-kube:2.8.1
+      sizeBytes: 30924173
+    - names:
+        - registry.k8s.io/kube-proxy@sha256:ec532ff47eaf39822387e51ec73f1f2502eb74658c6303319db88d2c380d0210
+        - registry.k8s.io/kube-proxy:v1.30.0
+      sizeBytes: 29020473
+    - names:
+        - docker.io/flannel/flannel@sha256:c951947891d7811a4da6bf6f2f4dcd09e33c6e1eb6a95022f3f621d00ed4615e
+        - docker.io/flannel/flannel:v0.23.0
+      sizeBytes: 28051548
+    - names:
+        - registry.k8s.io/kube-scheduler@sha256:2353c3a1803229970fcb571cffc9b2f120372350e01c7381b4b650c4a02b9d67
+        - registry.k8s.io/kube-scheduler:v1.30.0
+      sizeBytes: 19208660
+    - names:
+        - docker.io/library/nginx@sha256:a5127daff3d6f4606be3100a252419bfa84fd6ee5cd74d0feaca1a5068f97dcf
+        - docker.io/library/nginx:alpine
+      sizeBytes: 18593388
+    - names:
+        - registry.k8s.io/coredns/coredns@sha256:1eeb4c7316bacb1d4c8ead65571cd92dd21e27359f0d4917f1a5822a73b75db1
+        - registry.k8s.io/coredns/coredns:v1.11.1
+      sizeBytes: 18182961
+    - names:
+        - registry.k8s.io/coredns/coredns@sha256:a0ead06651cf580044aeb0a0feba63591858fb2e43ade8c9dea45a6a89ae7e5e
+        - registry.k8s.io/coredns/coredns:v1.10.1
+      sizeBytes: 16190758
+    - names:
+        - docker.io/weaveworks/weave-npc@sha256:38d3e30a97a2260558f8deb0fc4c079442f7347f27c86660dbfc8ca91674f14c
+        - docker.io/weaveworks/weave-npc:2.8.1
+      sizeBytes: 12814131
+    - names:
+        - docker.io/flannel/flannel-cni-plugin@sha256:ca6779c6ad63b77af8a00151cefc08578241197b9a6fe144b0e55484bc52b852
+        - docker.io/flannel/flannel-cni-plugin:v1.2.0
+      sizeBytes: 3879095
+    - names:
+        - docker.io/library/busybox@sha256:c230832bd3b0be59a6c47ed64294f9ce71e91b327957920b6929a0caa8353140
+        - docker.io/library/busybox:latest
+      sizeBytes: 2163277
+    - names:
+        - registry.k8s.io/pause@sha256:7031c1b283388d2c2e09b57badb803c05ebed362dc88d84b480cc47f72a21097
+        - registry.k8s.io/pause:3.9
+      sizeBytes: 321520
+    - names:
+        - registry.k8s.io/pause@sha256:3d380ca8864549e74af4b29c10f9cb0956236dfb01c40ca076fb6c37253234db
+        - registry.k8s.io/pause:3.6
+      sizeBytes: 301773
+  nodeInfo:
+    architecture: amd64
+    bootID: 9f261a52-d90e-4c6f-b35d-19a8d2982c1e
+    containerRuntimeVersion: containerd://1.6.26
+    kernelVersion: 5.4.0-1106-gcp
+    kubeProxyVersion: v1.30.0
+    kubeletVersion: v1.30.0
+    machineID: b809c26e416c419b9f57cca0c2b545ca
+    operatingSystem: linux
+    osImage: Ubuntu 22.04.5 LTS
+    systemUUID: bfd9a690-6d7f-6100-518e-a2dfa0293004
